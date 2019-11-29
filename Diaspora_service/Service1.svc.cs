@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -12,6 +13,10 @@ namespace Diaspora_service
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
     public class Service1 : IService1
     {
-        
+        SqlConnection conn = new SqlConnection(
+            "Data Source= LAKENDEV;" +
+            "Initial Catalog=wcfrest;" +
+            "User ID=sa;" +
+            "password=maksudku1");
     }
 }
