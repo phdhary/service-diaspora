@@ -13,7 +13,21 @@ namespace Diaspora_service
     public interface IService1
     {
 
-        
+
+        [OperationContract]
+        [WebInvoke(
+            Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "getalldata")]
+        List<pengurus> GetAllData();
+
+        [WebInvoke(
+           Method = "POST",
+           RequestFormat = WebMessageFormat.Json,
+           ResponseFormat = WebMessageFormat.Json,
+           UriTemplate = "adddata")]
+        string AddData(pengurus p);
     }
 
 
