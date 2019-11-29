@@ -19,6 +19,30 @@ namespace Diaspora_service
             "Initial Catalog=diaspora;" +
             "User ID=sa;" +
             "password=123");
+
+        public pengurus GetData(string id)
+        {
+            pengurus p = new pengurus();
+            SqlCommand cmd = new SqlCommand("select from pengurus where no_anggota=" + id, conn);
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                pengurus pengurus = new pengurus();
+                pengurus.no_anggota = Convert.ToInt32(reader["no_anggota"]);
+                pengurus.nama = reader["nama"].ToString();
+                pengurus.kontak = reader["kontak"].ToString();
+                pengurus.asal = reader["asal"].ToString();
+                pengurus.jabatan = reader["jabatan"].ToString();
+                pengurus.angkatan = reader["angkatan"].ToString();
+                pengurus.periode = reader["periode"].ToString();
+                pengurus.id_organisasi = Convert.ToInt32(reader["id_organisasi"]);
+            }
+            conn.Close();
+            return p;
+        }
+
+
         public List<pengurus> GetAllData()
         {
             List<pengurus> p = new List<pengurus>();
@@ -56,6 +80,23 @@ namespace Diaspora_service
             {
 
                 return "Data gagal disimpan : " + ex.ToString();
+            }
+        }
+        public string UpdateData(pengurus p)
+        {
+            string query = string.Format("insert into pengurus value('{0}','{1}','{2}','{3}','{4}','{5}',{6})", p.nama, p.kontak, p.asal, p.jabatan, p.angkatan, p.periode, p.id_organisasi);
+            SqlCommand cmd = new SqlCommand(query, conn);
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                return "Data Berhasil Diupdate";
+            }
+            catch (Exception ex)
+            {
+
+                return "Data gagal Diupdate : " + ex.ToString();
             }
         }
     }

@@ -13,6 +13,15 @@ namespace Diaspora_service
     public interface IService1
     {
 
+        [WebInvoke(
+    Method = "GET",
+    RequestFormat = WebMessageFormat.Json,
+    ResponseFormat = WebMessageFormat.Json,
+    UriTemplate = "getdata/id = {id}")]
+        pengurus GetData(string id);
+
+
+
 
         [OperationContract]
         [WebInvoke(
@@ -28,6 +37,13 @@ namespace Diaspora_service
            ResponseFormat = WebMessageFormat.Json,
            UriTemplate = "adddata")]
         string AddData(pengurus p);
+
+        [WebInvoke(
+          Method = "POST",
+          RequestFormat = WebMessageFormat.Json,
+          ResponseFormat = WebMessageFormat.Json,
+          UriTemplate = "updatedata")]
+        string UpdateData(pengurus p);
     }
 
 
