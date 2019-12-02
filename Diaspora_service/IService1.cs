@@ -70,6 +70,14 @@ namespace Diaspora_service
       UriTemplate = "getalldatadpm")]
         List<pengurus> GetAllDataDPM();
 
+        [OperationContract]
+        [WebInvoke(
+      Method = "GET",
+      RequestFormat = WebMessageFormat.Json,
+      ResponseFormat = WebMessageFormat.Json,
+      UriTemplate = "getalldatadm")]
+        List<admin> GetAllDataAdmin();
+
 
         [OperationContract]
         [WebInvoke(
@@ -78,6 +86,8 @@ namespace Diaspora_service
             ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "deletedata")]
         string DeleteData(pengurus dp);
+
+
 
     }
 

@@ -20,10 +20,10 @@ namespace Diaspora_service
             "User ID=sa;" +
             "password=123");
 
-        public pengurus GetData(string id)
+        public pengurus GetData(string nama)
         {
             pengurus p = new pengurus();
-            SqlCommand cmd = new SqlCommand("select from pengurus where no_anggota=" + id, conn);
+            SqlCommand cmd = new SqlCommand("select from pengurus where nama=" +"'"+ nama + "'", conn);
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -42,7 +42,7 @@ namespace Diaspora_service
             return p;
         }
 
-
+        //get alldata pengurus
         public List<pengurus> GetAllData()
         {
             List<pengurus> p = new List<pengurus>();
@@ -61,6 +61,24 @@ namespace Diaspora_service
                 pengurus.periode = reader["periode"].ToString();
                 pengurus.id_organisasi = Convert.ToInt32(reader["id_organisasi"]);
                 p.Add(pengurus);
+            }
+            conn.Close();
+            return p;
+        }
+        //get alldata admin
+        public List<admin> GetAllDataAdmin()
+        {
+            List<admin> p = new List<admin>();
+            SqlCommand cmd = new SqlCommand("select * from admin", conn);
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                admin adm = new admin();
+                adm.adminname = reader["adminname"].ToString();
+                adm.password = reader["password"].ToString();
+               
+                p.Add(adm);
             }
             conn.Close();
             return p;
@@ -192,6 +210,11 @@ namespace Diaspora_service
         public string angkatan { get; set; }
         public string periode { get; set; }
         public int id_organisasi { get; set; }
+    }
+    public class admin
+    {
+        public string adminname { get; set; }
+        public string password { get; set; }
     }
 
 }
