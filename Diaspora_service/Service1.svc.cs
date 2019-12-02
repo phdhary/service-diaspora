@@ -99,6 +99,88 @@ namespace Diaspora_service
                 return "Data gagal Diupdate : " + ex.ToString();
             }
         }
+        public List<pengurus> GetAllDataIMM()
+        {
+            List<pengurus> p = new List<pengurus>();
+            SqlCommand cmd = new SqlCommand("select * from pengurus where id_organisasi = 1", conn);
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                pengurus pengurus = new pengurus();
+                pengurus.no_anggota = Convert.ToInt32(reader["no_anggota"]);
+                pengurus.nama = reader["nama"].ToString();
+                pengurus.kontak = reader["kontak"].ToString();
+                pengurus.asal = reader["asal"].ToString();
+                pengurus.jabatan = reader["jabatan"].ToString();
+                pengurus.angkatan = reader["angkatan"].ToString();
+                pengurus.periode = reader["periode"].ToString();
+                pengurus.id_organisasi = Convert.ToInt32(reader["id_organisasi"]);
+                p.Add(pengurus);
+            }
+            conn.Close();
+            return p;
+        }
+        public List<pengurus> GetAllDataBEM()
+        {
+            List<pengurus> p = new List<pengurus>();
+            SqlCommand cmd = new SqlCommand("select * from pengurus where id_organisasi = 2", conn);
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                pengurus pengurus = new pengurus();
+                pengurus.no_anggota = Convert.ToInt32(reader["no_anggota"]);
+                pengurus.nama = reader["nama"].ToString();
+                pengurus.kontak = reader["kontak"].ToString();
+                pengurus.asal = reader["asal"].ToString();
+                pengurus.jabatan = reader["jabatan"].ToString();
+                pengurus.angkatan = reader["angkatan"].ToString();
+                pengurus.periode = reader["periode"].ToString();
+                pengurus.id_organisasi = Convert.ToInt32(reader["id_organisasi"]);
+                p.Add(pengurus);
+            }
+            conn.Close();
+            return p;
+        }
+        public List<pengurus> GetAllDataDPM()
+        {
+            List<pengurus> p = new List<pengurus>();
+            SqlCommand cmd = new SqlCommand("select * from pengurus where id_organisasi = 3", conn);
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                pengurus pengurus = new pengurus();
+                pengurus.no_anggota = Convert.ToInt32(reader["no_anggota"]);
+                pengurus.nama = reader["nama"].ToString();
+                pengurus.kontak = reader["kontak"].ToString();
+                pengurus.asal = reader["asal"].ToString();
+                pengurus.jabatan = reader["jabatan"].ToString();
+                pengurus.angkatan = reader["angkatan"].ToString();
+                pengurus.periode = reader["periode"].ToString();
+                pengurus.id_organisasi = Convert.ToInt32(reader["id_organisasi"]);
+                p.Add(pengurus);
+            }
+            conn.Close();
+            return p;
+        }
+        public string DeleteData(pengurus dp)
+        {
+            string query = string.Format("delete from dbo.pengurus where id = {0}", dp.no_anggota);
+            SqlCommand cmd = new SqlCommand(query, conn);
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                return "Data berhasil dihapus";
+            }
+            catch (Exception e)
+            {
+                return "Data gagal dihapus : " + e.Message;
+            }
+        }
     }
     public class pengurus
     {
@@ -111,4 +193,5 @@ namespace Diaspora_service
         public string periode { get; set; }
         public int id_organisasi { get; set; }
     }
+
 }

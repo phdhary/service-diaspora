@@ -44,6 +44,41 @@ namespace Diaspora_service
           ResponseFormat = WebMessageFormat.Json,
           UriTemplate = "updatedata")]
         string UpdateData(pengurus p);
+
+
+        [OperationContract]
+        [WebInvoke(
+          Method = "GET",
+          RequestFormat = WebMessageFormat.Json,
+          ResponseFormat = WebMessageFormat.Json,
+          UriTemplate = "getalldataimm")]
+        List<pengurus> GetAllDataIMM();
+
+        [OperationContract]
+        [WebInvoke(
+        Method = "GET",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "getalldatabem")]
+        List<pengurus> GetAllDataBEM();
+
+        [OperationContract]
+        [WebInvoke(
+      Method = "GET",
+      RequestFormat = WebMessageFormat.Json,
+      ResponseFormat = WebMessageFormat.Json,
+      UriTemplate = "getalldatadpm")]
+        List<pengurus> GetAllDataDPM();
+
+
+        [OperationContract]
+        [WebInvoke(
+            Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "deletedata")]
+        string DeleteData(pengurus dp);
+
     }
 
 
