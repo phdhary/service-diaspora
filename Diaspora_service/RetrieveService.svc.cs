@@ -4,26 +4,26 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.ServiceModel.Web;
 using System.Text;
-
+using Diaspora_service.Models;
 
 namespace Diaspora_service
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
-    // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
-    public class Service1 : IService1
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "RetrieveService" in code, svc and config file together.
+    // NOTE: In order to launch WCF Test Client for testing this service, please select RetrieveService.svc or RetrieveService.svc.cs at the Solution Explorer and start debugging.
+    public class RetrieveService : IRetrieveService
     {
+        //---Koneksi ke database
         SqlConnection conn = new SqlConnection(
             "Data Source= DESKTOP-SN9NTRV;" +
             "Initial Catalog=diaspora;" +
             "User ID=sa;" +
             "password=123");
-
+        //---Method untuk mengambil 1 data dari db lalu memasukkan ke dalam model
         public pengurus GetData(string nama)
         {
             pengurus p = new pengurus();
-            SqlCommand cmd = new SqlCommand("select from pengurus where nama=" +"'"+ nama + "'", conn);
+            SqlCommand cmd = new SqlCommand("select from pengurus where nama=" + "'" + nama + "'", conn);
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -43,13 +43,14 @@ namespace Diaspora_service
         }
 
         //get alldata pengurus
+        //---Method untuk mengambil semua data pengurus dari db lalu memasukkan ke dalam model
         public List<pengurus> GetAllData()
         {
             List<pengurus> p = new List<pengurus>();
-            SqlCommand cmd = new SqlCommand ("select * from pengurus", conn);
+            SqlCommand cmd = new SqlCommand("select * from pengurus", conn);
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();
-            while(reader.Read())
+            while (reader.Read())
             {
                 pengurus pengurus = new pengurus();
                 pengurus.no_anggota = Convert.ToInt32(reader["no_anggota"]);
@@ -66,6 +67,7 @@ namespace Diaspora_service
             return p;
         }
         //get alldata admin
+        //---Method untuk mengambil semua data admin dari db lalu memasukkan ke dalam model
         public List<admin> GetAllDataAdmin()
         {
             List<admin> p = new List<admin>();
@@ -77,46 +79,14 @@ namespace Diaspora_service
                 admin adm = new admin();
                 adm.adminname = reader["adminname"].ToString();
                 adm.password = reader["password"].ToString();
-               
+
                 p.Add(adm);
             }
             conn.Close();
             return p;
         }
-        public string AddData(pengurus p)
-        {
-            string query = string.Format("insert into pengurus value('{0}','{1}','{2}','{3}','{4}','{5}',{6})", p.nama, p.kontak, p.asal, p.jabatan, p.angkatan, p.periode, p.id_organisasi);
-            SqlCommand cmd = new SqlCommand(query, conn);
-            try
-            {
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                return "Data Berhasil Disimpan";
-            }
-            catch (Exception ex)
-            {
-
-                return "Data gagal disimpan : " + ex.ToString();
-            }
-        }
-        public string UpdateData(pengurus p)
-        {
-            string query = string.Format("insert into pengurus value('{0}','{1}','{2}','{3}','{4}','{5}',{6})", p.nama, p.kontak, p.asal, p.jabatan, p.angkatan, p.periode, p.id_organisasi);
-            SqlCommand cmd = new SqlCommand(query, conn);
-            try
-            {
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                return "Data Berhasil Diupdate";
-            }
-            catch (Exception ex)
-            {
-
-                return "Data gagal Diupdate : " + ex.ToString();
-            }
-        }
+        //---Method untuk mengambil semua data pengurus KMTI yg ikut IMM 
+        //---dari db lalu memasukkan ke dalam model
         public List<pengurus> GetAllDataIMM()
         {
             List<pengurus> p = new List<pengurus>();
@@ -139,6 +109,8 @@ namespace Diaspora_service
             conn.Close();
             return p;
         }
+        //---Method untuk mengambil semua data pengurus KMTI yg ikut BEM 
+        //---dari db lalu memasukkan ke dalam model
         public List<pengurus> GetAllDataBEM()
         {
             List<pengurus> p = new List<pengurus>();
@@ -161,6 +133,8 @@ namespace Diaspora_service
             conn.Close();
             return p;
         }
+        //---Method untuk mengambil semua data pengurus KMTI yg ikut DPM 
+        //---dari db lalu memasukkan ke dalam model
         public List<pengurus> GetAllDataDPM()
         {
             List<pengurus> p = new List<pengurus>();
@@ -183,38 +157,5 @@ namespace Diaspora_service
             conn.Close();
             return p;
         }
-        public string DeleteData(pengurus dp)
-        {
-            string query = string.Format("delete from dbo.pengurus where id = {0}", dp.no_anggota);
-            SqlCommand cmd = new SqlCommand(query, conn);
-            try
-            {
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                return "Data berhasil dihapus";
-            }
-            catch (Exception e)
-            {
-                return "Data gagal dihapus : " + e.Message;
-            }
-        }
     }
-    public class pengurus
-    {
-        public int no_anggota { get; set; }
-        public string nama { get; set; }
-        public string kontak { get; set; }
-        public string asal { get; set; }
-        public string jabatan { get; set; }
-        public string angkatan { get; set; }
-        public string periode { get; set; }
-        public int id_organisasi { get; set; }
-    }
-    public class admin
-    {
-        public string adminname { get; set; }
-        public string password { get; set; }
-    }
-
 }
