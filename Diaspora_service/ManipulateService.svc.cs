@@ -26,7 +26,7 @@ namespace Diaspora_service
 
         public string AddData(pengurus p)
         {
-            string query = string.Format("insert into pengurus value('{0}','{1}','{2}','{3}','{4}','{5}',{6})", p.nama, p.kontak, p.asal, p.jabatan, p.angkatan, p.periode, p.id_organisasi);
+            string query = string.Format("insert into pengurus values('{0}','{1}','{2}','{3}','{4}','{5}',{6})", p.nama, p.kontak, p.asal, p.jabatan, p.angkatan, p.periode, p.id_organisasi);
             SqlCommand cmd = new SqlCommand(query, conn);
             try
             {
@@ -44,7 +44,7 @@ namespace Diaspora_service
         //---Method untuk ubah data pengurus
         public string UpdateData(pengurus p)
         {
-            string query = string.Format("insert into pengurus value('{0}','{1}','{2}','{3}','{4}','{5}',{6})", p.nama, p.kontak, p.asal, p.jabatan, p.angkatan, p.periode, p.id_organisasi);
+            string query = string.Format("Update pengurus set nama='{0}',kontak='{1}',asal='{2}',jabatan='{3}',angkatan='{4}',periode='{5}',id_organisasi={6} where no_anggota={7}", p.nama, p.kontak, p.asal, p.jabatan, p.angkatan, p.periode, p.id_organisasi, p.no_anggota);
             SqlCommand cmd = new SqlCommand(query, conn);
             try
             {
@@ -61,7 +61,7 @@ namespace Diaspora_service
         //---Method untuk hapus data pengurus
         public string DeleteData(pengurus dp)
         {
-            string query = string.Format("delete from dbo.pengurus where id = {0}", dp.no_anggota);
+            string query = string.Format("delete from dbo.pengurus where no_anggota = {0}", dp.no_anggota);
             SqlCommand cmd = new SqlCommand(query, conn);
             try
             {

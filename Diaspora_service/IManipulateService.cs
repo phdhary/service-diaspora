@@ -14,6 +14,7 @@ namespace Diaspora_service
     public interface IManipulateService
     {
         //---Interface Untuk Tambah Data Pengurus
+        [OperationContract]
         [WebInvoke(
            Method = "POST",
            RequestFormat = WebMessageFormat.Json,
@@ -21,7 +22,7 @@ namespace Diaspora_service
            UriTemplate = "adddata")]
         string AddData(pengurus p);
         //---Interface Untuk Ubah Data Pengurus
-
+        [OperationContract]
         [WebInvoke(
           Method = "POST",
           RequestFormat = WebMessageFormat.Json,

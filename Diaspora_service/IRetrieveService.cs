@@ -13,12 +13,21 @@ namespace Diaspora_service
     [ServiceContract]
     public interface IRetrieveService
     {
+        [OperationContract]
         [WebInvoke(
             Method = "GET",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "getdata/id = {id}")]
-        pengurus GetData(string id);
+            UriTemplate = "search/nm={nama}")]
+        pengurus search(string nama);
+
+        [OperationContract]
+        [WebInvoke(
+            Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "getdatabyid/id={id}")]
+        pengurus GetDatabyID(string id);
 
         [OperationContract]
         [WebInvoke(

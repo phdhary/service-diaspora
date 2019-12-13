@@ -20,28 +20,48 @@ namespace Diaspora_service
             "User ID=sa;" +
             "password=123");
         //---Method untuk mengambil 1 data dari db lalu memasukkan ke dalam model
-        public pengurus GetData(string nama)
+        public pengurus search(string nama)
         {
             pengurus p = new pengurus();
-            SqlCommand cmd = new SqlCommand("select from pengurus where nama=" + "'" + nama + "'", conn);
+            SqlCommand cmd = new SqlCommand("select * from pengurus where nama like" + "'%" + nama + "%'", conn);
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                pengurus pengurus = new pengurus();
-                pengurus.no_anggota = Convert.ToInt32(reader["no_anggota"]);
-                pengurus.nama = reader["nama"].ToString();
-                pengurus.kontak = reader["kontak"].ToString();
-                pengurus.asal = reader["asal"].ToString();
-                pengurus.jabatan = reader["jabatan"].ToString();
-                pengurus.angkatan = reader["angkatan"].ToString();
-                pengurus.periode = reader["periode"].ToString();
-                pengurus.id_organisasi = Convert.ToInt32(reader["id_organisasi"]);
+                
+                p.no_anggota = Convert.ToInt32(reader["no_anggota"]);
+                p.nama = reader["nama"].ToString();
+                p.kontak = reader["kontak"].ToString();
+                p.asal = reader["asal"].ToString();
+                p.jabatan = reader["jabatan"].ToString();
+                p.angkatan = reader["angkatan"].ToString();
+                p.periode = reader["periode"].ToString();
+                p.id_organisasi = Convert.ToInt32(reader["id_organisasi"]);
             }
             conn.Close();
             return p;
         }
+        public pengurus GetDatabyID(string id)
+        {
+            pengurus p = new pengurus();
+            SqlCommand cmd = new SqlCommand("select * from pengurus where no_anggota ="  + id , conn);
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
 
+                p.no_anggota = Convert.ToInt32(reader["no_anggota"]);
+                p.nama = reader["nama"].ToString();
+                p.kontak = reader["kontak"].ToString();
+                p.asal = reader["asal"].ToString();
+                p.jabatan = reader["jabatan"].ToString();
+                p.angkatan = reader["angkatan"].ToString();
+                p.periode = reader["periode"].ToString();
+                p.id_organisasi = Convert.ToInt32(reader["id_organisasi"]);
+            }
+            conn.Close();
+            return p;
+        }
         //get alldata pengurus
         //---Method untuk mengambil semua data pengurus dari db lalu memasukkan ke dalam model
         public List<pengurus> GetAllData()
