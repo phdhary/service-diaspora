@@ -19,7 +19,7 @@ namespace Diaspora_service
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "search/nm={nama}")]
-        pengurus search(string nama);
+        List<pengurus> search(string nama);
 
         [OperationContract]
         [WebInvoke(
